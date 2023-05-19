@@ -71,10 +71,10 @@ According to the API docs, these events are available: (availability depends on 
   mqtt:
     binary_sensor:
       - name: Motion Front Yard
-      state_topic: cameras/2/VideoMotion
-      payload_on: Start
-      payload_off: Stop
-      device_class: motion
+        state_topic: cameras/2/VideoMotion
+        payload_on: Start
+        payload_off: Stop
+        device_class: motion
   ```
   
   
