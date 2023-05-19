@@ -22,11 +22,26 @@ DahuaMQTT:
       topic: cameras/2
       events: VideoMotion,VideoBlind,VideoLoss,AlarmLocal,....
 ```
+Note: If you are using an NVR rather than individual cameras, you can configure a single entry, along with a single MQTT topic, and the camera index number will be appended.
 
-App sends two MQTT topics:
+NVR Example Configuration:
+```
+DahuaMQTT:
+  class: DahuaMQTT
+  module: dahua_mqtt
+  cameras:
+    - host: 192.168.0.1
+      port: 80
+      user: user
+      pass: pass
+      topic: cameras/
+      events: VideoMotion,VideoBlind,VideoLoss,AlarmLocal,....
+```
+In this case, you will get messages published to cameras/1, cameras/2 etc
 
-First MQTT topic will be: cameras/1/<event>, ex: cameras/1/VideoMotion and payload will be action: Start or Stop<br/>
-Second MQTT topic will be: cameras/1, ex: cameras/1 and payload will be data received from camera in JSON format<br/>
+App sends to the configured MQTT topic:
+
+eg: cameras/1/<event>, ex: cameras/1/VideoMotion and payload will be action: Start or Stop<br/>
 
 According to the API docs, these events are available: (availability depends on your device and firmware)
   
@@ -50,3 +65,17 @@ According to the API docs, these events are available: (availability depends on 
         MDResult: motion detection data reporting event. The motion detect window contains 18 rows and 22 columns. The event info contains motion detect data with mask of every row.<br/>
         HeatImagingTemper: temperature alarm event<br/>
 
+
+  Example Home Assistant Configuration:
+  ```
+  mqtt:
+    binary_sensor:
+      - name: Motion Front Yard
+      state_topic: cameras/2/VideoMotion
+      payload_on: Start
+      payload_off: Stop
+      device_class: motion
+  ```
+  
+  
+  
