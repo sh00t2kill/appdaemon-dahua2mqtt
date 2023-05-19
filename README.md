@@ -24,27 +24,29 @@ DahuaMQTT:
 ```
 
 App sends two MQTT topics:
-First MQTT topic will be: cameras/1/<event>, ex: cameras/1/VideoMotion and payload will be action: Start or Stop
-Second MQTT topic will be: cameras/1, ex: cameras/1 and payload will be data received from camera in JSON format
+
+First MQTT topic will be: cameras/1/<event>, ex: cameras/1/VideoMotion and payload will be action: Start or Stop<br/>
+Second MQTT topic will be: cameras/1, ex: cameras/1 and payload will be data received from camera in JSON format<br/>
 
 According to the API docs, these events are available: (availability depends on your device and firmware)
-        VideoMotion: motion detection event
-        VideoLoss: video loss detection event
-        VideoBlind: video blind detection event.
-        AlarmLocal: alarm detection event.
-        CrossLineDetection: tripwire event
-        CrossRegionDetection: intrusion event
-        LeftDetection: abandoned object detection
-        TakenAwayDetection: missing object detection
-        VideoAbnormalDetection: scene change event
-        FaceDetection: face detect event
-        AudioMutation: intensity change
-        AudioAnomaly: input abnormal
-        VideoUnFocus: defocus detect event
-        WanderDetection: loitering detection event
-        RioterDetection: People Gathering event
-        ParkingDetection: parking detection event
-        MoveDetection: fast moving event
-        MDResult: motion detection data reporting event. The motion detect window contains 18 rows and 22 columns. The event info contains motion detect data with mask of every row.
-        HeatImagingTemper: temperature alarm event
+  
+        VideoMotion: motion detection event<br/>
+        VideoLoss: video loss detection event<br/>
+        VideoBlind: video blind detection event<br/>
+        AlarmLocal: alarm detection event<br/>
+        CrossLineDetection: tripwire event<br/>
+        CrossRegionDetection: intrusion event<br/>
+        LeftDetection: abandoned object detection<br/>
+        TakenAwayDetection: missing object detection<br/>
+        VideoAbnormalDetection: scene change event<br/>
+        FaceDetection: face detect event<br/>
+        AudioMutation: intensity change<br/>
+        AudioAnomaly: input abnormal<br/>
+        VideoUnFocus: defocus detect event<br/>
+        WanderDetection: loitering detection event<br/>
+        RioterDetection: People Gathering event<br/>
+        ParkingDetection: parking detection event<br/>
+        MoveDetection: fast moving event<br/>
+        MDResult: motion detection data reporting event. The motion detect window contains 18 rows and 22 columns. The event info contains motion detect data with mask of every row.<br/>
+        HeatImagingTemper: temperature alarm event<br/>
 
