@@ -1,5 +1,7 @@
 import appdaemon.plugins.hass.hassapi as hass
+import datetime
 import requests
+from requests.exceptions import ConnectionError
 
 class DahuaMQTT(hass.Hass):
 
@@ -13,8 +15,6 @@ class DahuaMQTT(hass.Hass):
         d = data.decode()
         for line in d.split("\r\n"):
             if line.startswith("Code="):
-                self.log(line)
-
                 event_data = line.split(";")
                 for event in event_data:
                     chunk = event.split("=")
@@ -32,14 +32,20 @@ class DahuaMQTT(hass.Hass):
                 self.log(f"Publishing {action_name} to {mqtt_topic}")
                 self.call_service("mqtt/publish", topic=mqtt_topic, payload=action_name, retain=camera["retain"])
 
+    def poll(self, url, camera):
+        r = requests.get(url, stream=True, timeout=120)
+        self.log("Connected to " + camera["host"])
+        try:
+            for event in r.iter_lines():
+                self.on_receive(event, camera)
+        except ConnectionError:
+            self.log("Timeout reached connecting to " + camera["host"] + " :: Reconnecting")
+            r.close()
+            self.poll(url, camera)
+
+
     def poll_camera(self, camera):
-        if "events" not in camera:
-          camera["events"] = "VideoMotion"
         url = "http://{0}:{1}@{2}:{3}/cgi-bin/eventManager.cgi?action=attach&codes=[{4}]"
         url = url.format(camera["user"], camera["pass"], camera["host"], camera["port"], camera["events"])
 
-        r = requests.get(url, stream=True)
-        self.log("Connected to " + camera["host"])
-
-        for event in r.iter_lines():
-            self.on_receive(event, camera)
+        self.poll(url, camera)
