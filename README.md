@@ -1,7 +1,7 @@
 # appdaemon-dahua2mqtt
 A port of existing dahua2mqtt, but using Requests instead of pycurl, as pycurl causes constant issues with alpine packages
 
-Dahua IP Camera events to MQTT app. Implemented from: https://github.com/johnnyletrois/dahua-watch
+The original can be found here: https://github.com/algirdasc/appdaemon-apps/blob/master/dahua_mqtt.py
 
 Example configuration:
 ```
